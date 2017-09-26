@@ -41,10 +41,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/nelsonjvf/gojenkins"
 	"io/ioutil"
 	"log"
 	"gopkg.in/yaml.v2"
+	"github.com/nelsonjvf/gohpalm"
 )
 
 func init() {
