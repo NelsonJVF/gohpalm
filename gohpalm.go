@@ -94,8 +94,8 @@ func HTTPRequest(hpAlmLable string, urlPath string) []byte {
 	}
 
 	if(len(url) == 0) {
-		log.Printf(" ---------- TMT configuration is missing  ---------- ")
-		log.Printf("\t For lable " + tmtLable)
+		log.Printf(" ---------- HP ALM configuration is missing  ---------- ")
+		log.Printf("\t For lable " + hpAlmLable)
 		return nil
 	}
 
