@@ -21,9 +21,9 @@ type Configuration struct {
 var Config []Configuration
 
 /*
-	TMT Defect Response Struct
+	HP ALM Defect Response Struct
  */
-type TmtDefectResponse struct {
+type HpAlmDefectResponse struct {
 	Type         string      `json:"type"`
 	Subject      interface{} `json:"subject"`
 	HasLinkage   string      `json:"has-linkage"`
@@ -80,13 +80,13 @@ type TmtDefectResponse struct {
 /*
 	Generic HTTP caller
  */
-func HTTPRequest(tmtLable string, urlPath string) []byte {
+func HTTPRequest(hpAlmLable string, urlPath string) []byte {
 	var username string
 	var password string
 	var url string
 
 	for _, c := range Config {
-		if c.Lable == tmtLable {
+		if c.Lable == hpAlmLable {
 			username = c.User
 			password = c.Pass
 			url = c.Url
@@ -149,15 +149,15 @@ func HTTPRequest(tmtLable string, urlPath string) []byte {
 }
 
 /*
-	Request specific TMT item, we should specify the project from that item
+	Request specific HP ALM item, we should specify the project from that item
  */
-func RequestIssue(tmtLable string, project string, domain string, item string) TmtDefectResponse {
+func RequestIssue(hpAlmLable string, project string, domain string, item string) HpAlmDefectResponse {
 	var urlIssuePath string
-	var data TmtDefectResponse
+	var data HpAlmDefectResponse
 
 	urlIssuePath = fmt.Sprintf("qcbin/api/domains/%s/projects/%s/defects/%s", project, domain, item)
 
-	response := HTTPRequest(tmtLable, urlIssuePath)
+	response := HTTPRequest(hpAlmLable, urlIssuePath)
 
 	err := json.Unmarshal(response, &data)
 	if err != nil {
