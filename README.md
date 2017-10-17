@@ -1,4 +1,4 @@
-# GoJenkins GoHPalm []()
+# GoHPalm []()
 
 Go package to use HP ALM Rest API
 
