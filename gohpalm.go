@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"io/ioutil"
 	"encoding/json"
+	"crypto/tls"
+	"time"
 )
 
 /*
@@ -100,6 +102,20 @@ func HTTPRequest(hpAlmLable string, urlPath string) []byte {
 	}
 
 	/*
+		Prepare HTTP Client
+	 */
+	timeoutVal := time.Duration(10 * time.Second)
+
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify : true},
+	}
+
+	client := &http.Client{
+		Timeout: timeoutVal,
+		Transport: tr,
+	}
+
+	/*
 		Get Cookie info
 	 */
 	urlCookie := fmt.Sprintf("%s%s", url, "qcbin/api/authentication/sign-in")
@@ -108,11 +124,13 @@ func HTTPRequest(hpAlmLable string, urlPath string) []byte {
 	if errCookie != nil {
 		log.Printf("http.NewRequest err   #%v ", errCookie)
 	}
+
 	reqCookie.SetBasicAuth(username, password)
 
-	respCookie, err := http.DefaultClient.Do(reqCookie)
-	if err != nil {
-		log.Printf("http.DefaultClient.Do err   #%v ", err)
+	respCookie, errDo := client.Do(reqCookie)
+	if errDo != nil {
+		log.Printf("http.DefaultClient.Do err   #%v ", errDo)
+		return []byte("")//, errDo
 	}
 	defer respCookie.Body.Close()
 
@@ -121,22 +139,20 @@ func HTTPRequest(hpAlmLable string, urlPath string) []byte {
 	 */
 	url = fmt.Sprintf("%s%s", url, urlPath)
 
-	req, err := http.NewRequest("GET", url, nil)
-	if err != nil {
-		log.Printf("http.NewRequest err   #%v ", err)
-	}
-
-	req.SetBasicAuth(username, password)
-	req.Header.Set("Content-Type", "application/json")
+	r, _ := http.NewRequest("GET", url, nil)
 
 	for _, cookie := range respCookie.Cookies() {
 		cookie := http.Cookie{Name: cookie.Name, Value: cookie.Value}
-		req.AddCookie(&cookie)
+		r.AddCookie(&cookie)
 	}
 
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		log.Printf("http.DefaultClient.Do err   #%v ", err)
+	r.SetBasicAuth(username, password)
+	r.Header.Add("Content-Type", "application/json")
+
+	resp, errDo := client.Do(r)
+	if errDo != nil {
+		log.Printf("http.DefaultClient.Do err   #%v ", errDo)
+		return []byte("")//, errDo
 	}
 	defer resp.Body.Close()
 
