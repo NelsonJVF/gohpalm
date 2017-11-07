@@ -1,4 +1,4 @@
-# GoHPalm []([![Codacy Badge](https://api.codacy.com/project/badge/Grade/ad8cdb159a554616a66f99516ff0a10a)](https://www.codacy.com/app/NelsonJVF/gohpalm?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=NelsonJVF/gohpalm&amp;utm_campaign=Badge_Grade))
+# GoHPalm [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ad8cdb159a554616a66f99516ff0a10a)](https://www.codacy.com/app/NelsonJVF/gohpalm?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=NelsonJVF/gohpalm&amp;utm_campaign=Badge_Grade)
 
 Go package to use HP ALM Rest API
 
