@@ -10,9 +10,7 @@ import (
 	"time"
 )
 
-/*
-	Struct for TMT access information
- */
+// Configuration represents a struct for TMT access information
 type Configuration struct {
 	Lable string `yaml:"lable"` // Some projects have more than one TMT instance, so just lable as you wish
 	User string `yaml:"user"` // TMT Username
@@ -22,9 +20,7 @@ type Configuration struct {
 
 var Config []Configuration
 
-/*
-	HP ALM Defect Response Struct
- */
+// HpAlmDefectResponse represents a struct for TMT defect response
 type HpAlmDefectResponse struct {
 	Type         string      `json:"type"`
 	Subject      interface{} `json:"subject"`
@@ -79,9 +75,7 @@ type HpAlmDefectResponse struct {
 	User03           string      `json:"user-03"`
 }
 
-/*
-	Generic HTTP caller
- */
+// HTTPRequest represents the generic HTTP caller for HP Alm
 func HTTPRequest(hpAlmLable string, urlPath string) []byte {
 	var username string
 	var password string
@@ -164,9 +158,7 @@ func HTTPRequest(hpAlmLable string, urlPath string) []byte {
 	return body
 }
 
-/*
-	Request specific HP ALM item, we should specify the project from that item
- */
+// RequestIssue represents the generic method to request an issue to HP ALM
 func RequestIssue(hpAlmLable string, project string, domain string, item string) HpAlmDefectResponse {
 	var urlIssuePath string
 	var data HpAlmDefectResponse
